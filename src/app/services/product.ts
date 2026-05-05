@@ -5,17 +5,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Product {
-  products = [
-    { id: 1, name: 'Computer', price: 100, selected: true },
-    { id: 2, name: 'Printer', price: 200, selected: false },
-    { id: 3, name: 'Phone', price: 300, selected: true },
-  ];
-  constructor() {}
+
+  constructor(private http: HttpClient) {
+
+  }
 
   getAllProducts() {
-    return this.products;
+    return this.http.get('http://localhost:8080/products');
   }
   deleteProduct(id: number) {
-    this.products = this.products.filter((item) => item.id !== id);
+    return this.http.delete(`http://localhost:8080/products/${id}`);
   }
 }

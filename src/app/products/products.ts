@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForOf } from '@angular/common';
+import { Product } from '../services/product';
 
 @Component({
   selector: 'app-products',
-  imports: [NgForOf],
+  imports: [],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
 export class Products implements OnInit {
-  products :Array<any>
-  constructor() {
-    this.products = []
+  products: any;
+
+  constructor(private productService :Product) {
   }
   ngOnInit() {
-    this.products = [
-      { id: 1, name: 'Computer', price: 100, selected: true },
-      { id: 2, name: 'Printer', price: 200, selected: false },
-      { id: 3, name: 'Phone', price: 300, selected: true },
-    ];
+    this.getAllProducts()
+  }
+
+  getAllProducts() {
+   this.products = this.productService.getAllProducts()
   }
 
   handelDelete(id: number) {
     let confirmation = confirm('Are you sure you want to delete this product?');
     if (confirmation) {
-      this.products = this.products.filter((item) => item.id !== id);
+      this.productService.deleteProduct(id)
+      this.getAllProducts()
     }
-
   }
 }
